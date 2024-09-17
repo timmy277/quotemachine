@@ -47,17 +47,17 @@ const XMLQuoteMachine = () => {
     };
     return (
         <>
-            <div className={`flex flex-col items-center justify-center min-h-screen  p-4 ${color}`}>
-                <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md ">
+            <div className={`flex flex-col items-center justify-center min-h-screen  p-4 ${color.split(' ')[0]}`}>
+                <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md ">
                     {error && <p className="text-center text-red-500">{error}</p>}
-                    <p className="text-4xl italic" > {`"${quote.content}"`}</p>
-                    <p className="mt-2 text-right ">{`— ${quote.author}`}</p>
+                    <p className={`text-4xl italic ${color.split(' ')[1]} `} > {`"${quote.content}"`}</p>
+                    <p className={`mt-2 text-right text-current ${color.split(' ')[1]} `}> {`— ${quote.author}`}</p>
                     <button
                         onClick={fetchQuote}
-                        className={` ${color} mt-6 px-4 py-2 text-gray-400 font-semibold rounded `} >
+                        className={` ${color.split(' ')[0]} mt-6 px-4 py-2 text-gray-400 font-semibold rounded `} >
                         New Quote
                     </button>
-                    <Link to="/" className="text-center text-blue-500 mt-4" >Fetch Quote Machine</Link>
+                    <Link to="/" className="mt-4 text-center text-blue-500" >Fetch Quote Machine</Link>
                 </div>
             </div>
         </>
