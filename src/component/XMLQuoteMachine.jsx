@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const colors = [
@@ -56,6 +57,7 @@ const XMLQuoteMachine = () => {
                         className={` ${color} mt-6 px-4 py-2 text-gray-400 font-semibold rounded `} >
                         New Quote
                     </button>
+                    <Link to="/" className="text-center text-blue-500 mt-4" >Fetch Quote Machine</Link>
                 </div>
             </div>
         </>
