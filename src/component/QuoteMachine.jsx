@@ -2,21 +2,18 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
-const colors = [
-    'red-500', 'green-500', 'blue-500', 'yellow-500',
-    'purple-500', 'pink-500', 'teal-500', 'indigo-500'
-];
-
-
 const getRandomColor = () => {
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    return colors[randomIndex];
+    const randomValue = () => Math.floor(Math.random() * 256);
+    const red = randomValue();
+    const green = randomValue();
+    const blue = randomValue();
+    return `rgb(${red}, ${green}, ${blue})`;
 };
 
 const QuoteMachine = () => {
     const [quote, setQuote] = useState({ content: '', author: '' });
     const [error, setError] = useState('');
-    const [color, setColor] = useState('bg-white text-black');
+    const [color, setColor] = useState('rgb(0, 0, 0)');
     console.log(color)
     const fetchQuote = () => {
         setError('');
@@ -32,7 +29,7 @@ const QuoteMachine = () => {
             .then(data => {
                 const randomColor = getRandomColor();
                 setQuote({ content: data.content, author: data.originator.name });
-                setColor(`bg-${randomColor} text-${randomColor}`);
+                setColor(randomColor);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -42,18 +39,19 @@ const QuoteMachine = () => {
 
     return (
         <>
-            <div className={`flex flex-col items-center justify-center min-h-screen  p-4 ${color.split(' ')[0]}`}>
+            <div className="flex flex-col items-center justify-center min-h-screen p-4" style={{ backgroundColor: color }}>
                 <div className={` max-w-md w-full bg-white p-6 rounded-lg shadow-md `}>
                     {error && <p className="text-center text-red-500">{error}</p>}
-                    <p className={`text-4xl italic ${color.split(' ')[1]} `} > {`"${quote.content}"`}</p>
-                    <p className={`mt-2 text-right text-current ${color.split(' ')[1]} `}> {`— ${quote.author}`}</p>
-                    <button
-                        onClick={fetchQuote}
-                        className= {` ${color.split(' ')[0]} mt-6 px-4 py-2 text-black font-semibold rounded `} >
-                        New Quote
-                    </button>
-                    {/* <span>{`${color.split(' ')[1]}`}</span> */}
-                    <Link to="/xml-quote-machine" className="text-center text-blue-500 mt-4" >XML Quote Machine</Link>
+                    <p className="text-4xl italic" style={{ color }} > {`"${quote.content}"`}</p>
+                    <p className="mt-2 text-right" style={{ color }}> {`— ${quote.author}`}</p>
+                    <div className='flex items-center justify-between'>
+                        <button
+                            onClick={fetchQuote}
+                            className="px-4 py-2 mt-6 font-semibold text-black rounded " style={{ backgroundColor: color }} >
+                            New Quote
+                        </button>
+                        <Link to="/xml-quote-machine" className="mt-4 text-center text-blue-500 " >XML Quote Machine</Link>
+                    </div>
                 </div>
             </div>
         </>
